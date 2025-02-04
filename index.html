@@ -815,10 +815,11 @@ console.log("in Capture Param");
   }
 
   // Run on page load
-    window.onload = () => {
-      captureUTMParams();
+
+	window.addEventListener('load', function() {
+  captureUTMParams();
 	    console.log("captureUTMParams called");
-    };
+});
 </script>
 
 	<!-- Canvas Scripts -->
@@ -871,9 +872,9 @@ console.log("in Capture Param");
 		}
 
 		// Show notification 3 seconds after page load
-		window.onload = () => {
-			setTimeout(showNotification, 3000);
-		};
+		window.addEventListener('load', function() {
+  setTimeout(showNotification, 3000);
+});
 	</script>
 
 </body>
