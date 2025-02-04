@@ -792,6 +792,7 @@
 <script>
 
   function captureUTMParams() {
+	  console.log("in Capture Param)
     const params = new URLSearchParams(window.location.search);
     const data = {
       utm_source: params.get('utm_source'),
