@@ -814,7 +814,9 @@
   }
 
   // Run on page load
-  window.onload = captureUTMParams;
+    window.onload = () => {
+      captureUTMParams();
+    };
 </script>
 
 	<!-- Canvas Scripts -->
