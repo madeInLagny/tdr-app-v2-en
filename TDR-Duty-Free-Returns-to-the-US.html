@@ -425,11 +425,21 @@
 
   .callOutBackgroundColor {
     background-color: lightgray;
+    position: relative;
+    z-index: var(--cc-z-index);
   }
 
   .callOutColor {
     color: darkslategray !important;
 
+  }
+
+  #logo {
+    margin-right: 0%
+  }
+
+  .textPanel {
+    margin-right: auto;
   }
 </style>
 
@@ -456,7 +466,10 @@
               alt="TDR Logo">
           </a>
         </div><!-- #logo end -->
-
+        <!-- Optional Text Panel -->
+        <div class="textPanel"><a href="consulting.html" class="fw-bold text-white">#AAEI25 Proud Sponsor <i
+              class="bi-arrow-right-square"></i></a></div>
+        <!-- Optional Text Panel end-->
         <div class="primary-menu-trigger">
           <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
             <span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
