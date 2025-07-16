@@ -418,10 +418,10 @@
           </a>
         </div><!-- #logo end -->
         <!-- Optional Text Panel -->
-        <div class="textPanel"><a
+        <!-- <div class="textPanel"><a
             href="https://blog.tradedutyrefund.com/trade-duty-refund-sponsors-aaei25-washington/?utm_source=Website&utm_medium=HeaderBanner&utm_campaign=AAEI"
             class="fw-bold text-white">#AAEI25 Proud Sponsor <i class="bi-arrow-right-square"></i></a></div>
-        <!-- Optional Text Panel end-->
+         --><!-- Optional Text Panel end-->
         <div class="primary-menu-trigger">
           <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
             <span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
@@ -542,9 +542,26 @@
               </ul>
             </li>
             <li class=" menu-item">
-                    <a class="menu-link" href="contact-us.html">
+                    <a class="menu-link" href="#">
                       <div>Get in touch!</div>
                     </a>
+                    <ul class="sub-menu-container">
+                      <li class="menu-item">
+                        <a class="menu-link" href="javascript:void(Tawk_API.toggle())">
+                          <div>Chat with us</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a class="menu-link" href="make-an-appointment.html">
+                          <div>Book a call with us</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a class="menu-link" href="https://www.linkedin.com/company/trade-duty-refund" target="_blank">
+                          <div>DM us on LinkedIn</div>
+                        </a>
+                      </li>
+                    </ul>
                 </li>
                 <!-- <li class="menu-item">
               <a class="menu-link" href="#">
@@ -758,10 +775,82 @@
     <h2 class="mb-1 h2">Eager to start saving big?</h2>
     <h3 class="mb-4 fw-medium">You're just one click away.</h3>
     <div class="d-flex gap-3 flex-wrap justify-content-center">
-      <a href="contact-us.html" class="button button-large button-rounded text-white">Contact Us</a>
-    </div>
+  <a class="button button-rounded" href="javascript:void(Tawk_API.toggle())"
+    role="button">Chat with us</a>
+  <a class="button button-rounded button-brown" href="make-an-appointment.html"
+    role="button">Book a call with us</a>
+  <a class="button button-rounded button-blue" href="https://www.linkedin.com/company/trade-duty-refund"
+    role="button">DM us on LinkedIn</a>
+</div>
+  </div>
+		<div class="section dark bg-transparent">
+			<!-- Title
+		============================================= -->
+<div class="container">
+  <div class="heading-block text-center m-0 border-0 pb-4">
+    <h2 class="h2">
+      Latest from the blog</h2>
   </div>
 </div>
+
+
+<!-- Gallery
+		============================================= -->
+<div class="container">
+  <div id="blog-gallery" class="row posts-md col-mb-30">
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () { fetchBlogPosts() })
+  async function fetchBlogPosts() {
+
+    const feedUrl = 'https://blog.tradedutyrefund.com/feed.xml'; // Replace with the actual feed URL
+    const response = await fetch(feedUrl);
+    const text = await response.text();
+
+    // Parse the XML
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+
+    // Extract items
+    const items = xml.querySelectorAll("item"); // Adjust selector if feed uses <item> instead of <entry>
+    const blogGallery = document.getElementById('blog-gallery');
+    blogGallery.innerHTML = ''; // Clear the gallery
+
+    // Loop through the latest 4 posts
+    for (let i = 0; i < Math.min(4, items.length); i++) {
+      const item = items[i];
+      const title = item.querySelector("title").textContent;
+      const link = item.querySelector("link").textContent;
+      const pubDate = item.querySelector("pubDate").textContent;
+      const image = item.querySelector("image").textContent;
+
+      // Create the HTML structure for each entry
+      const entryHtml = `
+        <div class="col-lg-3 col-md-6">
+          <div class="entry">
+            <div class="entry-image">
+              <a href="${link}"><img src="${image}" alt="${title}" class="rounded"></a>
+            </div>
+            <div class="entry-title title-xs text-transform-none px-2">
+              <h3><a href="${link}">${title}</a></h3>
+            </div>
+            <div class="entry-meta px-2">
+              <ul class="ps-0">
+                <li><i class="uil uil-schedule"></i>${new Date(pubDate).toLocaleDateString()}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        `;
+      // Append the entry to the gallery
+      blogGallery.innerHTML += entryHtml;
+    }
+  }
+</script>
+		</div>
+
       <style>
   #footer {
     --cnvs-socialicon-color: var(--lightSamaritan);
@@ -955,13 +1044,13 @@
           "notification alert alert-primary alert-dismissible";
         notification.setAttribute("role", "alert");
         notification.innerHTML = `<h2 class="my-1 h2">We have dedicated solutions for
-  <a href="solutions-for-us-shippers.html">
+  <a href="solutions-for-us-shippers.html" type="button" class="button button-rounded fs-4">
     <strong>US</strong>
   </a>,
-  <a href="solutions-for-eu-shippers.html">
+  <a href="solutions-for-eu-shippers.html" type="button" class="button button-rounded fs-4">
     <strong>EU</strong>
   </a> and
-  <a href="solutions-for-uk-shippers.html">
+  <a href="solutions-for-uk-shippers.html" type="button" class="button button-rounded fs-4">
     <strong>UK</strong>
   </a>
   shippers. Check them out!
@@ -982,10 +1071,10 @@
             notification.classList.remove("show");
             notification.classList.add("fade");
             notification.addEventListener("transitionend", () => {
-              notification.remove();
+              notification.remove(); 
             });
           }
-        }, 10000);
+        }, 1000);
 
         // Add click event to close button
         notification.querySelector(".close").addEventListener("click", () => {
