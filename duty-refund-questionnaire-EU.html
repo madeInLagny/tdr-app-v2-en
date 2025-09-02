@@ -96,7 +96,7 @@
 			color: var(--darkSamaritan);
 			border: none;
 		}
-	
+
 		@media (min-width: 768px) {
 
 			.w-md-15 {
@@ -597,21 +597,33 @@
 					<!-- Contact Form Overlay -->
 					<div class="contact-form-overlay col-md-8 offset-md-2 p-5">
 						<h2 class="fw-normal ls-0 text-transform-none mb-4 font-primary h1">
-							Optimizing Your Business Cashflow - US Duty Mitigation </h2>
-						<p class="text-lightSamaritan">Find out how much TDR will make you save in US duty drawback.</p>
+							Optimizing Your Business Cashflow - EU Duty Mitigation </h2>
+						<p class="text-lightSamaritan">Find out how much TDR will make you save in EU duty drawback.</p>
 
 						<form class="row mb-0" id="contactForm" action="https://api.staticforms.xyz/submit"
 							method="post" onSubmit="addSpinner()">
 							<input type="hidden" name="accessKey" value="e86b9da0-06b6-4d49-a19d-0825c9b33446">
 							<input id="redirectTo" type="hidden" name="redirectTo"
 								value="/duty-refund-questionnaire-completed.html">
-							<input type="hidden" name="subject" value="US-Duty-Reclaim-Questionnaire">
+							<input type="hidden" name="subject" value="EU-Duty-Reclaim-Questionnaire">
 							<input type="text" name="honeypot" style="display:none">
+							<!-- Country of entry -->
+							<div class="form-group">
+								<label>Where are your import goods Customs cleared?</label><br>
+								<select id="template-contactform-multiple-select"
+									name="template-contactform-multiple-select[]" class="selectpicker w-md-100"
+									multiple>
+									<option value="Mustard">Mustard</option>
+									<option value="Ketchup">Ketchup</option>
+									<option value="Relish">Relish</option>
+								</select>
+							</div>
+							<div class="w-100"></div>
 
 							<!-- IOR -->
 							<div class="form-group">
 								<label>Are you the importer of record for goods into the
-									United States?</label><br>
+									EU?</label><br>
 								<div class="btn-group">
 									<input type="radio" class="btn-check required" name="$self_ior" id="ior-yes"
 										autocomplete="off" value="Yes" oninput="setIORnumberBlockToNonRequired()"
