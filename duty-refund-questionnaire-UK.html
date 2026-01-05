@@ -63,8 +63,6 @@
 <meta name="apple-mobile-web-app-title" content="Duty Ref" />
 <link rel="manifest" href="/images/favicon/site.webmanifest" />
 
-
-
 	<!-- CSS imports -->
 	<!-- Font Imports -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,6 +89,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0-rc.16/dist/cookieconsent.css">
 </noscript>
 
+	<!-- Include the Multi Select stylesheet https://codeshack.io/multi-select-dropdown-js/-->
+	<link href="https://codeshack.io/web/demos/MultiSelect.css" rel="stylesheet" type="text/css">
+
 	<style>
 		.input-group-text {
 			background-color: var(--lightSamaritan);
@@ -108,6 +109,17 @@
 				width: 50% !important
 			}
 
+		}
+
+
+		.multi-select .multi-select-header .multi-select-header-placeholder,
+		.form-select {
+			color: var(--darkSamaritan);
+
+		}
+
+		.multi-select-header {
+			background-color: white;
 		}
 	</style>
 
@@ -564,124 +576,117 @@
 					<!-- Contact Form Overlay -->
 					<div class="contact-form-overlay col-md-8 offset-md-2 p-5">
 						<h2 class="fw-normal ls-0 text-transform-none mb-4 font-primary h1">
-							Optimizing Your Business Cashflow <br><em>
-								UK Duty Mitigation</em>
+							Optimizing Your Business Cashflow <br><em>UK Duty Mitigation</em>
 						</h2>
-						<p class="text-lightSamaritan">Find out how much TDR will make you save in UK duty refund.</p>
+
+						<p class="text-lightSamaritan mb-0">Find out how much TDR will make you save in UK duty
+							refund.</p>
+						<div class="alert alert-samaritan my-4" role="alert">
+							<i class="bi-cloud-arrow-down-fill"
+								style="font-size: 1.5rem;padding-right: 2rem; color:var(--samaritan)"></i> Prefer to
+							take your time? Use our <a href="./downloads/TDR_UK_Questionnaire.pdf" download
+								class="alert-link text-samaritan"><u>offline
+									form</u></a> to fill it out at your own pace.
+						</div>
 
 						<form class="row mb-0" id="contactForm" action="https://api.staticforms.xyz/submit"
 							method="post" onSubmit="addSpinner()">
 							<input type="hidden" name="accessKey" value="e86b9da0-06b6-4d49-a19d-0825c9b33446">
 							<input id="redirectTo" type="hidden" name="redirectTo" value="">
-							<input type="hidden" name="subject" value="EU-Duty-Reclaim-Questionnaire">
+							<input type="hidden" name="subject" value="UK-Duty-Reclaim-Questionnaire">
 							<input type="text" name="honeypot" style="display:none">
 
-							<!-- IOR -->
+
+							<!-- Document Retention Period (Simple number input 10ch) -->
 							<div class="form-group">
-								<label>Are you the importer of record for goods into the
-									EU?</label><br>
-								<div class="btn-group">
-									<input type="radio" class="btn-check required" name="$self_ior" id="ior-yes"
-										autocomplete="off" value="Yes" oninput="setIORnumberBlockToNonRequired()"
-										required>
-									<label for="ior-yes"
+								<label for="$DocumentRetentionPeriod">Over what period of time have you or your customs
+									broker retained documentation? <em>ie: dates (and ideally the MRN numbers) of goods
+										import and export</em></label><br>
+								<input id="$DocumentRetentionPeriod" type="number" class="form-control"
+									name="$DocumentRetentionPeriod" min="1" style="width:10ch;" required>
+							</div>
+							<div class="w-100"></div>
+
+							<!-- How much import duties did you pay during the past 12 months? (3 number inputs)-->
+							<div class="form-group">
+								<label for="$DutiesPaidIn12Months">How much import duties did you pay during the past 12
+									months?</label><br>
+								<div id="$DutiesPaidIn12Months" class="input-group mb-3 w-md-50">
+									<span class="input-group-text">£</span>
+									<input id="$DutiesPaidIn12Months" type="number" class="form-control"
+										name="$DutiesPaidIn12Months" min="1" required>
+								</div>
+							</div>
+							<div class="w-100"></div>
+
+							<!-- EORI -->
+							<div class="form-group">
+								<label for="$EORI">What is your UK EORI? <em>leave blank if you don't have one</em>
+								</label><br>
+								<input type="text" id="$EORI" name="$EORI" class="form-control w-md-50">
+							</div>
+							<div class="w-100"></div>
+
+
+							<!-- VAT -->
+							<div class="form-group">
+								<label for="$VAT">What is your VAT number? <em>leave blank if you don't have one</em>
+								</label><br>
+								<input type="text" id="$VAT" name="$VAT" class="form-control w-md-50">
+							</div>
+							<div class="w-100"></div>
+
+							<!-- Gov Gateway -->
+							<div class="form-group">
+								<label for="$RegisteredToUKGateway?">Is your company registered to the Goverment
+									Gateway?</label><br>
+								<div id="$RegisteredToUKGateway?" class="btn-group">
+									<input type="radio" class="btn-check required" name="$RegisteredToUKGateway?"
+										id="UK_registered_yes" autocomplete="off" value="Yes" required>
+									<label for="UK_registered_yes"
 										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">Yes</label>
-									<input type="radio" class="btn-check required" name="$self_ior" id="ior-no"
-										autocomplete="off" value="No" oninput="setIORnumberBlockToRequired()" required>
-									<label for="ior-no"
+									<input type="radio" class="btn-check required" name="$RegisteredToUKGateway?"
+										id="UK_registered_no" autocomplete="off" value="No" required>
+									<label for="UK_registered_no"
 										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">No</label>
 								</div>
 							</div>
 							<div class="w-100"></div>
-							<div class="form-group" id="number-of-iors-block" style="display: none;">
-								<label>If no, approximately how many importers of record do you work
-									with?</label><br>
-								<div class="btn-group">
-									<!-- Required attributes for this block are added programmatically in the previous block -->
-									<input type="radio" class="btn-check required" name="$number_of_iors" id="ior-1-10"
-										autocomplete="off" value="1-10">
-									<label for="ior-1-10"
-										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">1-10</label>
 
-									<input type="radio" class="btn-check required" name="$number_of_iors" id="ior-11-25"
-										autocomplete="off" value="11-25">
-									<label for="ior-11-25"
-										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">11-25</label>
-
-									<input type="radio" class="btn-check required" name="$number_of_iors" id="ior-26"
-										autocomplete="off" value="26+">
-									<label for="ior-26"
-										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">26+</label>
+							<!-- AccessToCDS -->
+							<div class="form-group">
+								<label for="$accessToCDS">Do you have access to your CDS reports for imports
+									and exports?</label><br>
+								<div id="$accessToCDS" class="btn-group">
+									<input type="radio" class="btn-check required" name="$accessToCDS"
+										id="access_to_cds_yes" autocomplete="off" value="Yes" required>
+									<label for="access_to_cds_yes"
+										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">Yes</label>
+									<input type="radio" class="btn-check required" name="$accessToCDS"
+										id="access_to_cds_no" autocomplete="off" value="No" required>
+									<label for="access_to_cds_no"
+										class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">No</label>
 								</div>
-							</div>
-							<div class="form-group" id="iors-names" style="display: none;">
-								<label>List main IOR names</label><br>
-								<input type="text" id="IORNames" name="$IORNames" class="form-control">
 							</div>
 							<div class="w-100"></div>
 
-							<!-- Duty Spend -->
+
+							<!-- name -->
 							<div class="form-group">
-								<label>What are your total duties paid per year?</label><br>
-								<div class="input-group w-md-50 mb-3">
-									<span class="input-group-text">GBP</span>
-									<input type="number" class="form-control" min="0" name="$dutySpentPerYear" required>
-								</div>
+								<label for="name">Your name</label><br>
+								<input type="text" id="name" name="name" class="form-control w-md-50" required>
 							</div>
-							<div class="w-100"></div>
-							<!-- Avg Order Value -->
+
+							<!-- Company -->
 							<div class="form-group">
-								<label>What is the average order value?</label><br>
-								<div class="input-group w-md-50 mb-3">
-									<span class="input-group-text">GBP</span>
-									<input type="number" class="form-control" min="0" name="$avgOrderValue" required>
-								</div>
+								<label for="$company">Your company name</label><br>
+								<input type="text" id="$company" name="$company" class="form-control w-md-50" required>
 							</div>
-							<div class="w-100"></div>
-							<!-- % Return -->
-							<div class="form-group">
-								<label>What percentage of those imported goods are subsequently
-									exported within 3 months?</label><br>
-								<div class="input-group mb-3 w-md-15">
-									<input type="number" class="form-control" min="0" man="100" name="$%ofGoodsExported"
-										required>
-									<span class="input-group-text">%</span>
-								</div>
-							</div>
-							<div class="w-100"></div>
-							<!-- Express Carriers -->
-							<div class="form-group">
-								<label>What percentage of your goods are shipped via express
-									carrier?</label><br>
-								<div class="input-group w-md-50 mb-3">
-									<input type="number" class="form-control" min="0" max="100"
-										name="$%inExpressCarrierImports" placeholder="Imports" required>
-									<input type="number" class="form-control" name="$%inExpressCarrierEmports"
-										placeholder="Exports" min="0" max="100" required>
-									<span class="input-group-text">%</span>
-								</div>
-							</div>
-							<div class="w-100"></div>
-							<!-- eCommerce -->
-							<div class="form-group">
-								<div>
-									<label class="mb-3">Are the imported goods sold B2C?</label><br>
-									<div class="btn-group">
-										<input type="radio" class="btn-check required" name="$b2c" id="b2c-yes"
-											autocomplete="off" value="Yes" required>
-										<label for="b2c-yes"
-											class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">Yes</label>
-										<input type="radio" class="btn-check required" name="$b2c" id="b2c-no"
-											autocomplete="off" value="No" required>
-										<label for="b2c-no"
-											class="btn btn-outline-light px-3 fw-semibold ls-0 text-transform-none">No</label>
-									</div>
-								</div>
-							</div>
-							<div class="w-100"></div>
+
 							<!-- email -->
 							<div class="form-group">
-								<label>What email should we send our recommendations to?</label><br>
+								<label for="email">Your email <em> our analysis and offers will be sent to that
+										address</em></label><br>
 								<input type="email" id="email" name="email" class="form-control w-md-50" required>
 							</div>
 
@@ -704,10 +709,6 @@
 				</div>
 			</div>
 		</section>
-
-
-
-
 
 		<style>
   #footer {
@@ -909,29 +910,6 @@
 		<script src="js/plugins.min.js"></script>
 		<script src="js/functions.bundle.js"></script>
 
-
-		<script>
-			function setIORnumberBlockToRequired() {
-				/* If the user is its own IOR, no need to answer the following blog of questions */
-				document.getElementById('ior-1-10').required = true;
-				document.getElementById('ior-11-25').required = true;
-				document.getElementById('ior-26').required = true;
-				document.getElementById('number-of-iors-block').style.display = 'block';
-				document.getElementById('iors-names').style.display = 'block';
-
-			}
-
-			function setIORnumberBlockToNonRequired() {
-				/* If the user is not its own IOR, the following blog of questions is required */
-				document.getElementById('ior-1-10').required = false;
-				document.getElementById('ior-11-25').required = false;
-				document.getElementById('ior-26').required = false;
-				document.getElementById('number-of-iors-block').style.display = 'none';
-				document.getElementById('iors-names').style.display = 'none';
-			}
-
-		</script>
-
 		<script>
 
 			function addSpinner() {
@@ -959,6 +937,9 @@
 				}
 			});
 		</script>
+
+		<!-- Include the Multi Select JS class https://codeshack.io/multi-select-dropdown-js/-->
+		<script src="https://codeshack.io/web/demos/MultiSelect.js"></script>
 
 </body>
 
