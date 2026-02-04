@@ -727,7 +727,6 @@
 						<!-- Results Column -->
 						<div class="col-lg-6">
 							<div id="resultsSection" style="display: none;">
-								<!-- <div id="resultsSection">-->
 								<div class="card border-0 shadow-sm">
 									<div class="contact-form-overlay p-4">
 										<h3 class="card-title mb-4">
@@ -735,7 +734,7 @@
 
 										<!-- Handling Fee -->
 										<div class="heading-block fancy-title border-bottom-0 title-top-border">
-											<h4>Handling Fees</h4>
+											<h4>National Handling Fees</h4>
 										</div>
 										<div class="mb-4" id="handlingFeeComment"></div>
 
@@ -758,7 +757,7 @@
 
 										<!-- Duties -->
 										<div class="heading-block fancy-title border-bottom-0 title-top-border">
-											<h4>Duties</h4>
+											<h4>Customs Import Duties</h4>
 										</div>
 										<div id="dutyComment"></div>
 
@@ -1018,14 +1017,25 @@
 	============================================= -->
 	<script>
   // Only load the CDN script if not running on localhost or file protocol
+  var ccScript = null;
+  var shouldLoadGDPR = null;
+
   if (
     location.hostname !== "localhost" &&
     location.hostname !== "127.0.0.1" &&
     location.protocol !== "file:"
   ) {
-    var ccScript = document.createElement('script');
+    ccScript = document.createElement('script');
     ccScript.defer = true;
     ccScript.src = "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js";
+    
+    // Load config after ccScript is resolved
+    ccScript.onload = function() {
+      if (shouldLoadGDPR !== null) {
+        loadCDN(shouldLoadGDPR);
+      }
+    };
+    
     document.head.appendChild(ccScript);
   }
 </script>
@@ -1050,13 +1060,22 @@
         // Check if the country is in the EU
         var euCountries = ['GB', 'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK'];
         if (euCountries.includes(data.country)) {
-          loadCDN(true);
+          shouldLoadGDPR = true;
         } else {
-          loadCDN()
+          shouldLoadGDPR = false;
+        }
+        
+        // If ccScript is not loaded yet, wait for it
+        if (ccScript && ccScript.readyState === 'loading') {
+          // ccScript will trigger loadCDN on load
+        } else {
+          // ccScript was not created (localhost) or already loaded
+          loadCDN(shouldLoadGDPR);
         }
       })
       .catch(error => {
         console.error('Error fetching IP information:', error);
+        loadCDN(false); // Default to non-GDPR config on error
       });
   }
 
