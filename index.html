@@ -1245,39 +1245,33 @@
     (function () {
       // EU country list (excludes France for separate logic)
       var euCountries = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DE', 'DK', 'EE', 'FI', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
+      var country;
 
-      // Inject styles for the clickable image
-      var style = document.createElement('style');
-      style.textContent = `
-        #geo-flag-link {
-          position: fixed;
-          left: 20px;
-          bottom: 20px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          border: none;
-          cursor: pointer;
-          z-index: 99999;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-          transition: transform .15s ease, opacity .2s ease;
-          background: transparent;
-        }
-        #geo-flag-link img {
-          height: 3vh;
-          object-fit: cover;
-          display: block;
-          -webkit-user-drag: none;
-          user-select: none;
-          pointer-events: none;
-        }
-        #geo-flag-link:active { transform: scale(.95); }
-        @media (max-width:480px) {
-          #geo-flag-link { left:12px; bottom:12px; }
-        }
-      `;
-      document.head.appendChild(style);
+      fetch('https://ipinfo.io/json')
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (data) {
+          var country =  (data && data.country) ? data.country.toUpperCase() : ''
+          
+        })
+        .catch(function (err) {
+          console.error('Geo image: unable to determine location', err);
+          addImage('/images/flag-world.png', 'World / Unknown', 'Location unknown');
+        });
+
+/*  */
+
+if (country === 'FR') {
+            // France -> French flag image
+            addImage('images/MadeInFrance.webp', 'French flag', 'French IP detected', 'about-us.html');
+          } else if (euCountries.includes(country)) {
+            // Other EU -> EU flag image
+            addImage('./images/MadeInEU.webp', 'European Union flag', 'European Union IP detected', 'about-us.html');
+          } else if (country === 'CA') {
+            // Other CA -> CA flag image
+            addImage('./images/CIFFAMember.webp', 'CIFFA Logo', 'CIFFA Logo');
+          }
+
+
 
       function addImage(src, alt, title, url) {
         // Remove existing if any
@@ -1317,6 +1311,9 @@
         document.body.appendChild(link);
       }
 
+
+
+
       // Fetch geo location and choose image
       fetch('https://ipinfo.io/json')
         .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
@@ -1338,6 +1335,44 @@
           addImage('/images/flag-world.png', 'World / Unknown', 'Location unknown');
         });
     })();
+
+
+    addImage(country){
+// Inject styles for the clickable image
+      var style = document.createElement('style');
+      style.textContent = `
+        #geo-flag-link {
+          position: fixed;
+          left: 20px;
+          bottom: 20px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border: none;
+          cursor: pointer;
+          z-index: 99999;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+          transition: transform .15s ease, opacity .2s ease;
+          background: transparent;
+        }
+        #geo-flag-link img {
+          height: 3vh;
+          object-fit: cover;
+          display: block;
+          -webkit-user-drag: none;
+          user-select: none;
+          pointer-events: none;
+        }
+        #geo-flag-link:active { transform: scale(.95); }
+        @media (max-width:480px) {
+          #geo-flag-link { left:12px; bottom:12px; }
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
   </script>
 
 </body>
