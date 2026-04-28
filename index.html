@@ -96,6 +96,10 @@
   <link rel="stylesheet" href="./css/custom/samaritan.css" />
 
   <style>
+    .modal-content {
+      color: var(--darkSamaritan);
+    }
+
     .notification {
       position: fixed;
       bottom: 0;
@@ -674,15 +678,28 @@
       <div class="slider-inner">
         <div class="container">
           <div class="slider-caption slider-caption-center gap-3">
-            <h1 class="h2" data-animate="fadeInUp">Worldwide Duty Refund</h1>
-            <div class="subtitle" data-animate="fadeIn" data-delay="1000">
-              We've made global duty drawback easy for you.<br />Check the value we bring to<br />
-              <a href="solutions-for-us-shippers.html" class="button-circle"><img src="./images/flags/us.svg" alt="US flag" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;" loading="lazy" />US</a>
-              <a href="solutions-for-all-shippers.html" class="button-circle"><img src="./images/flags/cn.svg" alt="China flag" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;" loading="lazy" /> CN</a>
-              <a href="solutions-for-eu-shippers.html" class="button-circle"><img src="./images/flags/eu.svg" alt="EU flag" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;" loading="lazy" />EU</a>
-              <a href="solutions-for-uk-shippers.html" class="button-circle"><img src="./images/flags/gb.svg" alt="UK flag" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;" loading="lazy" />UK</a>
-              <a href="solutions-for-all-shippers.html" class="button-circle">All</a><br />
-              <span>shippers</span>
+            <h1 class="h2" data-animate="fadeInUp"><span id="headerAll" class="text-white"
+                style="display: none;">Worldwide Customs Duty Refund</span><span id="headerUS" class="text-white"
+                style="display: none;">Worldwide Tariff Refund</span></h1>
+            <div class="subtitle" data-animate="fadeIn" data-delay="1000"> <strong>We've made global duty drawback easy for you.</strong>
+              <br /><br />
+
+              <span>
+                Check the value we bring to
+                <strong><span id="countryCode"></span></strong>
+                shippers <a id="cta" href="" class="px-2 text-white"><i
+                    class="bi-arrow-right-circle-fill"></i></a>
+              </span>
+              <br /><br />
+
+              <div>
+                <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#shippingModal">Shipping
+                  from
+                  somewhere else?</button>
+              </div>
+
+
+
             </div>
           </div>
         </div>
@@ -1092,6 +1109,50 @@
   </div>
   <!-- #wrapper end -->
 
+  <!-- Modal -->
+  <div class="modal fade text-start" id="shippingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h4 class="modal-title" id="myModalLabel">Modal Heading</h4> -->
+          <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body fs-4 text text-center">
+          We also provide value to shippers in
+          <div class="list-group">
+            <a href="solutions-for-us-shippers.html"
+              class="text-darkSamaritan list-group-item list-group-item-action flex-column align-items-start"><img
+                src="./images/flags/us.svg" alt="US flag"
+                style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;"
+                loading="lazy" />US</a>
+            <a href="solutions-for-all-shippers.html"
+              class="text-darkSamaritan list-group-item list-group-item-action flex-column align-items-start"><img
+                src="./images/flags/cn.svg" alt="China flag"
+                style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;"
+                loading="lazy" /> CN</a>
+            <a href="solutions-for-eu-shippers.html"
+              class="text-darkSamaritan list-group-item list-group-item-action flex-column align-items-start"><img
+                src="./images/flags/eu.svg" alt="EU flag"
+                style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;"
+                loading="lazy" />EU</a>
+            <a href="solutions-for-uk-shippers.html"
+              class="text-darkSamaritan list-group-item list-group-item-action flex-column align-items-start"><img
+                src="./images/flags/gb.svg" alt="UK flag"
+                style="width:18px;height:18px;vertical-align:middle;margin-right:8px;display:inline-block;"
+                loading="lazy" />UK</a>
+            <a href="solutions-for-all-shippers.html"
+              class="text-darkSamaritan list-group-item list-group-item-action flex-column align-items-start">Global</a>
+          </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
   <!-- Javascripts
 	============================================= -->
   <script>
@@ -1383,11 +1444,20 @@
         document.body.appendChild(link);
       }
 
+      function addCountryCode(countryCode) {
+        var countryCodeSpan = document.getElementById('countryCode');
+        countryCodeSpan.textContent = countryCode ? countryCode.toUpperCase() : '';
+      }
+
       // Fetch geo location and choose image
       fetch('https://ipinfo.io/json')
         .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
         .then(function (data) {
-          var country =  (data && data.country) ? data.country.toUpperCase() : ''
+          var country = (data && data.country) ? data.country.toUpperCase() : '';
+          var headerSpan = document.getElementById('headerAll');
+          var headerUSSpan = document.getElementById('headerUS');
+          var ctaButton = document.getElementById('cta');
+          console.log('Geo location detected:', country);
           if (country === 'FR') {
             // France -> French flag image
             addImage('images/MadeInFrance.webp', 'French flag', 'French IP detected', 'about-us.html');
@@ -1397,6 +1467,28 @@
           } else if (country === 'CA') {
             // Other CA -> CA flag image
             addImage('./images/CIFFAMember.webp', 'CIFFA Logo', 'CIFFA Logo');
+          }
+
+          if (country === 'US') {
+            addCountryCode('US');
+            headerUSSpan.style.display = 'inline';
+            headerSpan.style.display = 'none';
+            ctaButton.href = 'solutions-for-us-shippers.html';
+          } else if (country === 'GB' || country === 'UK') {
+            addCountryCode('UK');
+            headerUSSpan.style.display = 'none';
+            headerSpan.style.display = 'inline';
+            ctaButton.href = 'solutions-for-uk-shippers.html';
+          } else if (euCountries.includes(country) || country === 'FR') {
+            addCountryCode('EU');
+            headerUSSpan.style.display = 'none';
+            headerSpan.style.display = 'inline';
+            ctaButton.href = 'solutions-for-eu-shippers.html';
+          } else {
+            addCountryCode('All');
+            headerUSSpan.style.display = 'none';
+            headerSpan.style.display = 'inline';
+            ctaButton.href = 'solutions-for-all-shippers.html';
           }
         })
         .catch(function (err) {
