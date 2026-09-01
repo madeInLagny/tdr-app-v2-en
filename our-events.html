@@ -591,6 +591,83 @@
 						</div>
 					</div>
 					<div class="container mt-5">
+
+						<div class="row justify-content-center gutter-50 col-mb-50">
+
+							
+<div class="entry event col-lg-5 col-md-6">
+    <div class="grid-inner row g-0 p-4 shadow-sm h-shadow all-ts h-translatey-sm card border">
+        <div class="entry-image">
+            <a href="https://parcelandpostexpo.com/">
+                <img src="images/events/thumbs/parcelpostexpo2026.webp" alt="Parcel & Post Expo 2026">
+            </a>
+        </div>
+        <div class="entry-title title-sm">
+            <h2 class="text-samaritan">Parcel & Post Expo 2026</h2>
+        </div>
+        <div class="entry-meta">
+            <ul>
+                <li><span id="parcelandpostexpo2026-event-status-badge" class="badge text-dark py-1 px-2"></span></li>
+                <li><i class="bi-calendar text-samaritan"></i> <span id="parcelandpostexpo2026-event-date" class="text-samaritan"></span>
+                </li>
+                <li><i class="bi-geo-alt text-samaritan"></i> <span class="text-samaritan">London, UK</span></li>
+            </ul>
+        </div>
+        <div class="entry-content">
+            <p class="text-samaritan">Parcel+Post Expo is a leading international event for the parcel delivery, postal, and e-commerce logistics industries. It brings together postal operators, carriers, retailers, technology providers, and logistics professionals to explore the latest innovations, solutions, and trends shaping the future of global delivery.</p>
+            <a href="https://parcelandpostexpo.com/" class="button">Register</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var badge = document.getElementById('parcelandpostexpo2026-event-status-badge');
+
+        if (!badge) return;
+        var dateText = document.getElementById('parcelandpostexpo2026-event-date');
+        var startDateValue = "2026-09-23";
+        var endDateValue = "2026-09-24";
+        var startDate = startDateValue ? new Date(startDateValue) : null;
+        var endDate = endDateValue ? new Date(endDateValue) : null;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        var locale = 'en-US';
+        var dateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
+
+        function formatDate(date) {
+            return date ? dateFormat.format(date) : '';
+        }
+
+        var dateLabel = '';
+        if (startDate && endDate) {
+            dateLabel = formatDate(startDate) + ' - ' + formatDate(endDate);
+        } else if (startDate) {
+            dateLabel = formatDate(startDate);
+        }
+
+        badge.classList.remove('samaritanGreen-bg', 'samaritanBlue-bg', 'samaritanRed-bg');
+
+        if (startDate && today < startDate) {
+            badge.textContent = 'Open';
+            badge.classList.add('samaritanGreen-bg');
+        } else if (startDate && endDate && today >= startDate && today <= endDate) {
+            badge.textContent = 'Live';
+            badge.classList.add('samaritanBlue-bg');
+        } else {
+            badge.textContent = 'Past';
+            badge.classList.add('samaritanRed-bg');
+        }
+
+        if (dateLabel) {
+            dateText.textContent += ' • ' + dateLabel;
+        }
+    });
+</script>
+
+						</div>
 						<div class="row justify-content-center gutter-50 col-mb-50">
 
 							
